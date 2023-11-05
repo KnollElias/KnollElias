@@ -2,6 +2,93 @@
 import SiteLayout from '../layouts/SiteLayout.astro';
 ---
 
-<SiteLayout title="KnollElias">
-	Elias Knoll
+<!-- Assuming the SVG paths are correctly defined to spell out the company name -->
+<SiteLayout title="Animated SVG Drawing">
+  <div id="svgContainer" style="position: relative;">
+    <!-- SVG for the black text -->
+    <svg id="blackSvg" class="drawing-svg" viewBox="0 0 926 325" xmlns="http://www.w3.org/2000/svg">
+      <path id="blackPath" d="M10,10 C100,100 200,100 300,10" fill="none" stroke="black" stroke-width="2"/>
+    </svg>
+    <!-- SVG for the white text -->
+    <svg id="whiteSvg" class="drawing-svg" viewBox="0 0 926 325" xmlns="http://www.w3.org/2000/svg">
+      <path id="whitePath" d="M10,10 C100,100 200,100 300,10" fill="none" stroke="white" stroke-width="2"/>
+    </svg>
+  </div>
 </SiteLayout>
+
+<script>
+  var thePathLength = 0.00000000;
+  document.addEventListener('DOMContentLoaded', () => {
+    const pathElement = document.getElementById('blackPath');
+    const pathLength = pathElement.getTotalLength();
+    thePathLength = pathLength;
+    console.log('The total length of the path is:', thePathLength);
+  });
+</script>
+
+<script>
+  function initializeStroke(pathElement) {
+    console.log('Initializing stroke', pathElement, thePathLength);
+    pathElement.style.strokeDasharray = thePathLength;
+    pathElement.style.strokeDashoffset = thePathLength;
+  }
+  
+  function drawStroke(pathElement, duration) {
+    pathElement.style.strokeDashoffset = '0';
+    pathElement.style.transition = `stroke-dashoffset ${duration} ease-out`;
+  }
+  
+  // Function to handle resetting the stroke for the next cycle
+  function resetStroke(pathElement) {
+    pathElement.style.strokeDashoffset = thePathLength;
+    pathElement.style.transition = 'none';
+  }
+  
+  // Function to handle the complete animation cycle
+  function animationCycle(blackPath, whitePath) {
+    drawStroke(blackPath, '2s'); // Draw black text
+  }
+  blackPath.ontransitionend = () => {
+    console.log("end Black")
+    resetStroke(whitePath, thePathLength); // Reset white text
+    console.log("Start White")
+    drawStroke(whitePath, '2s'); // Overdraw with white text
+  };
+  whitePath.ontransitionend = () => {
+    console.log("end White")
+    resetStroke(blackPath, thePathLength); // Clear black text
+    console.log("Start Black")
+    drawStroke(blackPath, '2s'); // Redraw black text
+  };
+
+  var thePathLength = 0.00000000;
+  document.addEventListener('DOMContentLoaded', () => {
+    const blackPath = document.getElementById('blackPath');
+    const whitePath = document.getElementById('whitePath');
+    thePathLength = blackPath.getTotalLength();
+
+    // Initialize both strokes
+    initializeStroke(blackPath, thePathLength);
+    initializeStroke(whitePath, thePathLength);
+    
+    // Start the animation cycle
+    console.log("Start Black")
+    drawStroke(blackPath, '2s'); // Draw black text
+  });
+</script>
+
+<style>
+  .drawing-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Initially both paths are not visible */
+  #blackPath, #whitePath {
+    stroke-dasharray: 0;
+    stroke-dashoffset: 0;
+  }
+</style>
