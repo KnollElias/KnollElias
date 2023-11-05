@@ -11,8 +11,29 @@ const { title } = Astro.props;
 		<title>{ title }</title>
 	</head>
 	<body>
-		<slot>Nothing IO</slot>
+		<slot>Nothing</slot>
 	</body>
 	<style>
+		html, body {
+			margin: 0;
+			padding: 0;
+		}
+
+		.container {
+			background-color: #f5f5;
+		
+			position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: auto;
+
+			/* width: 41.625vw;
+			height: 41.625vh;
+			display: flex;
+			justify-content: center;
+			align-items: center; */
+		}
+
 	</style>
 </html>
