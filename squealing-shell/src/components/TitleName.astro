@@ -1,16 +1,91 @@
 ---
-const { prop } = Astro.props;
+const { styles } = Astro.props;
 ---
 
-<div>
-  <h2>Prop</h2>
-  <p>{ prop }</p>
+<div id="svgContainer" style="position: relative;">
+  <div style={styles}>
+    <svg id="blackSvg" class="drawing-svg" viewBox="0 0 926 325" xmlns="http://www.w3.org/2000/svg">
+      <path id="blackPath" d="M10,10 C100,100 200,100 300,10" fill="none" stroke="black" stroke-width="2"/>
+    </svg>
+    <svg id="whiteSvg" class="drawing-svg" viewBox="0 0 926 325" xmlns="http://www.w3.org/2000/svg">
+      <path id="whitePath" d="M10,10 C100,100 200,100 300,10" fill="none" stroke="white" stroke-width="2"/>
+    </svg>
+  </div>
 </div>
 
+<script>
+  const drawingSpeed = "2s";
 
+  document.addEventListener('DOMContentLoaded', () => {
+    const blackPath = document.getElementById('blackPath');
+    const whitePath = document.getElementById('whitePath');
+    const thePathLength = blackPath.getTotalLength();
 
-import TitleName from '../components/TitleName.astro';
----
+    function initializeStroke(pathElement) {
+      pathElement.style.strokeDasharray = thePathLength;
+      pathElement.style.strokeDashoffset = thePathLength;
+    }
 
-<SiteLayout title="Animated SVG Drawing">
-  <TitleName prop="Animated SVG Drawing" />
+    function drawStroke(pathElement, duration, nextAction) {
+    pathElement.ontransitionend = () => {
+      pathElement.ontransitionend = null;
+      nextAction();
+    };
+    
+    pathElement.getBoundingClientRect();
+    
+    pathElement.style.transition = `stroke-dashoffset ${duration} ease-out`;
+    pathElement.style.strokeDashoffset = '0';
+  }
+
+  function setZIndex(primary, secondary) {
+    primary.style.zIndex = '2';
+    secondary.style.zIndex = '1';
+  }
+
+    function resetStroke(pathElement, nextAction) {
+      pathElement.style.transition = 'none'; // Disable transition to reset instantly
+      pathElement.style.strokeDashoffset = thePathLength;
+      // Using requestAnimationFrame to ensure the reset is visually complete before next draw
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          nextAction();
+        });
+      });
+    }
+
+    // Initialize both strokes
+    initializeStroke(blackPath);
+    initializeStroke(whitePath);
+
+    const animationCycle = () => {
+      console.log("Here hte black should be on top")
+      setZIndex(blackSvg, whiteSvg);
+      console.log('Draw Black');
+      drawStroke(blackPath, drawingSpeed, () => {
+        console.log('REset WHite');
+        resetStroke(whitePath, () => {
+          console.log('Draw White');
+          setZIndex(whiteSvg, blackSvg);
+          drawStroke(whitePath, drawingSpeed, () => {
+            console.log('Reset Black');
+            resetStroke(blackPath, animationCycle); // Loop the animation
+          });
+        });
+      });
+    };
+
+    // Start the animation cycle
+    animationCycle();
+  });
+</script>
+
+<style>
+  .drawing-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+</style>
