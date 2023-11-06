@@ -1,0 +1,94 @@
+---
+---
+
+<div>
+  <svg id="blackSvg" class="drawing-svg" viewBox="0 0 926 325" xmlns="http://www.w3.org/2000/svg">
+    <path id="blackPath" d="M10,10 C100,100 200,100 300,10" fill="none" stroke="black" stroke-width="2"/>
+  </svg>
+  <svg id="whiteSvg" class="drawing-svg" viewBox="0 0 926 325" xmlns="http://www.w3.org/2000/svg">
+    <path id="whitePath" d="M10,10 C100,100 200,100 300,10" fill="none" stroke="white" stroke-width="2"/>
+  </svg>
+</div>
+
+<script>
+  const drawingSpeed = "2s";
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const blackPath = document.getElementById('blackPath');
+    const whitePath = document.getElementById('whitePath');
+    const thePathLength = blackPath.getTotalLength();
+
+    function initializeStroke(pathElement) {
+      pathElement.style.strokeDasharray = thePathLength;
+      pathElement.style.strokeDashoffset = thePathLength;
+    }
+
+    function drawStroke(pathElement, duration, nextAction) {
+    pathElement.ontransitionend = () => {
+      pathElement.ontransitionend = null;
+      nextAction();
+    };
+    
+    pathElement.getBoundingClientRect();
+    
+    pathElement.style.transition = `stroke-dashoffset ${duration} ease-out`;
+    pathElement.style.strokeDashoffset = '0';
+  }
+
+  function setZIndex(primary, secondary) {
+    primary.style.zIndex = '2';
+    secondary.style.zIndex = '1';
+  }
+
+    function resetStroke(pathElement, nextAction) {
+      pathElement.style.transition = 'none'; // Disable transition to reset instantly
+      pathElement.style.strokeDashoffset = thePathLength;
+      // Using requestAnimationFrame to ensure the reset is visually complete before next draw
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          nextAction();
+        });
+      });
+    }
+
+    // Initialize both strokes
+    initializeStroke(blackPath);
+    initializeStroke(whitePath);
+
+    const animationCycle = () => {
+      setZIndex(blackSvg, whiteSvg);
+      drawStroke(blackPath, drawingSpeed, () => {
+        resetStroke(whitePath, () => {
+          setZIndex(whiteSvg, blackSvg);
+          drawStroke(whitePath, drawingSpeed, () => {
+            resetStroke(blackPath, animationCycle); // Loop the animation
+          });
+        });
+      });
+    };
+
+    // Start the animation cycle
+    animationCycle();
+  });
+</script>
+
+
+<style>
+  p {
+    padding: 0;
+    margin: 0;
+  }
+  div {
+    background-color: blue;
+    width: 100vw;
+    height: 100vh;
+  }
+  .drawing-svg {
+    background-color: red;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 50vw;
+    height: 50vh;
+  }
+</style>
