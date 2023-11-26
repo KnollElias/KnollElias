@@ -1,0 +1,34 @@
+---
+const routes = [
+  { link: 'Checkout', title: "Git" },
+  { link: 'Follow', title: "Linkedin" },
+  { link: 'Contact', title: "Email" }
+]
+---
+
+<div class="container">
+  {routes.map(route => (
+    <div key={route.link}>
+      <p>{route.title}</p>
+      <p>{route.link}</p>
+      <br />
+    </div>
+  ))}
+</div>
+
+
+<style>
+  p {
+    margin: 0;
+    background-color: red;
+  }
+  .container {
+    background-color: blue;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+</style>
