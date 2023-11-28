@@ -5,26 +5,26 @@ const { key, title, text, file, filetype, width, height } = Astro.props;
 
 <div class="container" 
      onMouseEnter={(event) => handleMouseEnter(event, key)} 
+     onMouseLeave={(event) => handleMouseLeave(event)}
      id={'resume-item-' + key}>
   <p class="title">{title}</p>
-  <!-- The visibility of this will be controlled via JavaScript -->
   <div class="text-and-file" style="display: none;">
     <p class="text">{text}</p>
     {filetype === 'pdf' && (
       <object data={file} type="application/pdf" width={width} height={height}>PDF cannot be displayed</object>
     )}
-    {/* Add more conditions here for other file types like 'png', 'jpg', etc. */}
   </div>
 </div>
 
 <script>
-  // This script runs in the browser
   function handleMouseEnter(event, key) {
-    // Update the `openedResumeKey` state in the parent component
-    const customEvent = new CustomEvent('set-open-key', {
+    window.dispatchEvent(new CustomEvent('set-open-key', {
       detail: { key }
-    });
-    window.dispatchEvent(customEvent);
+    }));
+  }
+
+  function handleMouseLeave(event) {
+    window.dispatchEvent(new Event('clear-open-key'));
   }
 </script>
 

@@ -16,32 +16,33 @@ import certificate from '../../public/certificates/W3_cdev.pdf';
 
 <script>
   let openedResumeKey = 0;
+  let collapseTimeoutId;
 
-  function updateDisplay(key) {
-    // Hide all items
-    document.querySelectorAll('.text-and-file').forEach(el => {
-      el.style.display = 'none';
-    });
-    // Show the active item
+  function updateDisplay(key, show) {
     const activeItem = document.getElementById('resume-item-' + key);
     if (activeItem) {
-      activeItem.querySelector('.text-and-file').style.display = 'block';
+      const textAndFile = activeItem.querySelector('.text-and-file');
+      textAndFile.style.display = show ? 'block' : 'none';
     }
   }
 
   window.addEventListener('set-open-key', (event) => {
+    if (collapseTimeoutId) {
+      clearTimeout(collapseTimeoutId);
+    }
     openedResumeKey = event.detail.key;
-    updateDisplay(openedResumeKey);
+    updateDisplay(openedResumeKey, true);
   });
 
-  // You don't need the DOMContentLoaded event if you are using type="module" 
-  // since modules are deferred by default
+  window.addEventListener('clear-open-key', () => {
+    collapseTimeoutId = setTimeout(() => {
+      updateDisplay(openedResumeKey, false);
+    }, 3000);
+  });
+
   document.querySelectorAll('.container').forEach(item => {
-    item.addEventListener('mouseenter', () => {
-      // This will be called when you hover over a ResumeItem
-      openedResumeKey = parseInt(item.id.replace('resume-item-', ''));
-      // Update the display of each ResumeItem
-      updateDisplay(openedResumeKey);
+    item.addEventListener('mouseleave', () => {
+      window.dispatchEvent(new CustomEvent('clear-open-key'));
     });
   });
 </script>
