@@ -1,29 +1,49 @@
 ---
-// THis is a block to laod assetslike .pdf and .png  and or .jpg.
-// The astro props should be the name of the file and the type of file, as well as the caption and the text.
+// Props: key, title, text, file, filetype
+const { key, title, text, file, filetype, width, height } = Astro.props;
 ---
 
-<div class="container">
-  <p>{title}</p>
-  <ul>
-  {points.map(route => (
-    <li id={route + "c"}><p>{route}</p></li>
-  ))}
-  </ul>
+<div class="container" 
+     onMouseEnter={(event) => handleMouseEnter(event, key)} 
+     id={'resume-item-' + key}>
+  <p class="title">{title}</p>
+  <!-- The visibility of this will be controlled via JavaScript -->
+  <div class="text-and-file" style="display: none;">
+    <p class="text">{text}</p>
+    {filetype === 'pdf' && (
+      <object data={file} type="application/pdf" width={width} height={height}>PDF cannot be displayed</object>
+    )}
+    {/* Add more conditions here for other file types like 'png', 'jpg', etc. */}
+  </div>
 </div>
 
+<script>
+  // This script runs in the browser
+  function handleMouseEnter(event, key) {
+    // Update the `openedResumeKey` state in the parent component
+    const customEvent = new CustomEvent('set-open-key', {
+      detail: { key }
+    });
+    window.dispatchEvent(customEvent);
+  }
+</script>
 
 <style>
-  p {
-    margin: 0;
-    color: white;
-  }
   .container {
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #fff;
+    color: white;
+    cursor: pointer;
+    background-color: red;
+  }
+  .title {
+    font-weight: bold;
+  }
+  .text {
+    margin-top: 5px;
+  }
+  .certificate-container {
+    margin-top: 10px;
   }
 </style>

@@ -2,22 +2,54 @@
 // import TextLink from '../elements/3textlink.astro'
 import Resume from '../elements/Resume.astro'
 import ResumeItem from '../elements/ResumeItem.astro'
+
+import certificate from '../../public/certificates/W3_cdev.pdf';
 ---
 
 <div>
   <!-- <TextLink /> -->
   <Resume />
-  <ResumeItem key={1} title={"C# Developmentcourse, W3Schools"} text={"I didi this course etc.."} file={require("../../public/certificates/W3_cdev.pdf")} filetype={"pdf"}/>
-
-
-  
+  <div class="resumeItems" >
+    <ResumeItem key={1} title={"C# Developmentcourse, W3Schools"} text={"I did this course etc.."} file={certificate} filetype={"pdf"} width={300} height={300} />
+  </div>
 </div>
 
 <script>
   let openedResumeKey = 0;
+
+  function updateDisplay(key) {
+    // Hide all items
+    document.querySelectorAll('.text-and-file').forEach(el => {
+      el.style.display = 'none';
+    });
+    // Show the active item
+    const activeItem = document.getElementById('resume-item-' + key);
+    if (activeItem) {
+      activeItem.querySelector('.text-and-file').style.display = 'block';
+    }
+  }
+
+  window.addEventListener('set-open-key', (event) => {
+    openedResumeKey = event.detail.key;
+    updateDisplay(openedResumeKey);
+  });
+
+  // You don't need the DOMContentLoaded event if you are using type="module" 
+  // since modules are deferred by default
+  document.querySelectorAll('.container').forEach(item => {
+    item.addEventListener('mouseenter', () => {
+      // This will be called when you hover over a ResumeItem
+      openedResumeKey = parseInt(item.id.replace('resume-item-', ''));
+      // Update the display of each ResumeItem
+      updateDisplay(openedResumeKey);
+    });
+  });
 </script>
 
 <style>
+  .resumeItems {
+    width: 80vw;
+  }
   p {
     padding: 0;
     margin: 0;
@@ -26,5 +58,8 @@ import ResumeItem from '../elements/ResumeItem.astro'
     background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(10, 10, 10));
     width: 100vw;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 </style>
