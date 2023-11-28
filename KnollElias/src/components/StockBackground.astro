@@ -16,42 +16,39 @@ import c4 from '../../public/certificates/OU_SCOD.pdf';
     <ResumeItem key={4} title={"core coding concepts, OpenUniversity"} text={"I did this course etc.."} file={c4} filetype={"pdf"} width={300} height={300} />
     <ResumeItem key={3} title={"Being an OU Student, OpenUniversity"} text={"I did this course etc.."} file={c3} filetype={"pdf"} width={300} height={300} />
     <ResumeItem key={2} title={"SEO ECommerce Mastery, Udemy"} text={"I did this course etc.."} file={c2} filetype={"jpg"} width={300} height={300} />
-    <ResumeItem key={1} title={"C# Programming Using, W3Schools"} text={"I did this course etc.."} file={c1} filetype={"pdf"} width={300} height={300} />
+    <ResumeItem key={1} title={"Programming Using C#, W3Schools"} text={"I did this course etc.."} file={c1} filetype={"pdf"} width={300} height={300} />
   </div>
 </div>
 
 <script>
-  let openedResumeKey = 0;
-  let collapseTimeoutId;
-
-  function updateDisplay(key, show) {
-    const activeItem = document.getElementById('resume-item-' + key);
-    if (activeItem) {
-      const textAndFile = activeItem.querySelector('.text-and-file');
-      textAndFile.style.display = show ? 'block' : 'none';
-    }
+  // Define a function to toggle the display of the text and file
+  function toggleDisplay(container) {
+    const textAndFile = container.querySelector('.text-and-file');
+    textAndFile.style.display = textAndFile.style.display === 'block' ? 'none' : 'block';
   }
 
-  window.addEventListener('set-open-key', (event) => {
-    if (collapseTimeoutId) {
-      clearTimeout(collapseTimeoutId);
-    }
-    openedResumeKey = event.detail.key;
-    updateDisplay(openedResumeKey, true);
-  });
+  // Attach event listeners
+  document.addEventListener('DOMContentLoaded', () => {
+    const containers = document.querySelectorAll('.container');
 
-  window.addEventListener('clear-open-key', () => {
-    collapseTimeoutId = setTimeout(() => {
-      updateDisplay(openedResumeKey, false);
-    }, 3000);
-  });
-
-  document.querySelectorAll('.container').forEach(item => {
-    item.addEventListener('mouseleave', () => {
-      window.dispatchEvent(new CustomEvent('clear-open-key'));
+    containers.forEach(container => {
+      container.addEventListener('mouseenter', () => {
+        container.style.backgroundColor = 'red';
+        toggleDisplay(container);
+      });
+      container.addEventListener('mouseleave', () => {
+        container.style.backgroundColor = '';
+        toggleDisplay(container);
+      });
+      // Add touch event listeners for mobile devices
+      container.addEventListener('touchstart', () => {
+        container.style.backgroundColor = 'red';
+        toggleDisplay(container);
+      });
     });
   });
 </script>
+
 
 <style>
   .resumeItems {

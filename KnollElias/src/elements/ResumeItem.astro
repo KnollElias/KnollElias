@@ -1,24 +1,21 @@
 ---
-// Props: key, title, text, file, filetype
-const { key, title, text, file, filetype, width, height } = Astro.props;
+// Props: key, title, text, file, filetype, width, height
+const { key, title, text, file, filetype } = Astro.props;
 ---
 
-<div class="container" style=`width: 100%;`
+<div class="container" id={'resume-item-' + key}
      onMouseEnter={(event) => handleMouseEnter(event, key)} 
-     onMouseLeave={(event) => handleMouseLeave(event)}
-     id={'resume-item-' + key}>
+     onMouseLeave={(event) => handleMouseLeave(event, key)}>
   <p class="title">{title}</p>
   <div class="text-and-file" style="display: none;">
     <p class="text">{text}</p>
-    {
-    filetype === 'pdf' && (
-      <object data={file} type="application/pdf" width={width}>PDF cannot be displayed</object>
-    )
-    }{
-    filetype === 'jpg' && (
-      <img src={file} width={width} />
-    )
-    }
+    {filetype === 'pdf' && (
+      <object data={file} type="application/pdf" style="width: 80%; height: 50vh;">PDF cannot be displayed</object>
+    )}
+    {filetype === 'jpg' && (
+      <img src={file} style="width: 80%; height: 80%;" alt="Certificate image" />
+    )}
+    {/* Add conditions for other file types as needed */}
   </div>
 </div>
 
@@ -26,28 +23,50 @@ const { key, title, text, file, filetype, width, height } = Astro.props;
   let timers = {};
 
   function handleMouseEnter(event, key) {
-    clearTimeout(timers[key]); // Clear the timer if it's already running
-    const textAndFile = event.currentTarget.querySelector('.text-and-file');
+    clearTimeout(timers[key]);
+    const container = event.currentTarget;
+    container.style.backgroundColor = 'red';
+    const textAndFile = container.querySelector('.text-and-file');
     textAndFile.style.display = 'block';
   }
 
   function handleMouseLeave(event, key) {
-    const textAndFile = event.currentTarget.querySelector('.text-and-file');
-    // Set a timeout to hide the text and file after 3000ms
+    const container = event.currentTarget;
+    container.style.backgroundColor = ''; // Reset background color
+    if (timers[key]) {
+      clearTimeout(timers[key]);
+    }
     timers[key] = setTimeout(() => {
+      const textAndFile = container.querySelector('.text-and-file');
       textAndFile.style.display = 'none';
     }, 3000);
   }
 
+  function handleTouchStart(event, key) {
+    event.preventDefault();
+    const currentTimer = timers[key];
+    if (currentTimer) {
+      clearTimeout(currentTimer);
+    }
+    const container = event.currentTarget;
+    container.style.backgroundColor = 'red';
+    const textAndFile = container.querySelector('.text-and-file');
+    const isCurrentlyDisplayed = textAndFile.style.display === 'block';
+    // Toggle display on touch
+    textAndFile.style.display = isCurrentlyDisplayed ? 'none' : 'block';
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
-    // Attach the event handlers to all elements with the class 'container'
     document.querySelectorAll('.container').forEach(container => {
-      const key = parseInt(container.id.replace('resume-item-', ''));
+      const key = parseInt(container.getAttribute('id').replace('resume-item-', ''));
       container.addEventListener('mouseenter', (event) => handleMouseEnter(event, key));
       container.addEventListener('mouseleave', (event) => handleMouseLeave(event, key));
+      container.addEventListener('touchstart', (event) => handleTouchStart(event, key));
     });
   });
 </script>
+
+
 
 
 <style>
@@ -57,6 +76,12 @@ const { key, title, text, file, filetype, width, height } = Astro.props;
     border: 1px solid #fff;
     color: white;
     cursor: pointer;
+    width: 100%;
+    text-align: center;
+    transition: background-color 0.3s; /* Smooth transition for background color */
+  }
+  .container:hover, .container:active {
+    background-color: red; /* Change color on hover and on active state for mobile */
   }
   .title {
     font-weight: bold;
