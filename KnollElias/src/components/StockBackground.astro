@@ -3,14 +3,20 @@
 import Resume from '../elements/Resume.astro'
 import ResumeItem from '../elements/ResumeItem.astro'
 
-import certificate from '../../public/certificates/W3_cdev.pdf';
+import c1 from '../../public/certificates/W3_cdev.pdf';
+import c2 from '../../public/certificates/UC_SEO.jpg';
+import c3 from '../../public/certificates/OU_student.pdf';
+import c4 from '../../public/certificates/OU_SCOD.pdf';
 ---
 
 <div>
   <!-- <TextLink /> -->
   <Resume />
   <div class="resumeItems" >
-    <ResumeItem key={1} title={"C# Developmentcourse, W3Schools"} text={"I did this course etc.."} file={certificate} filetype={"pdf"} width={300} height={300} />
+    <ResumeItem key={4} title={"core coding concepts, OpenUniversity"} text={"I did this course etc.."} file={c4} filetype={"pdf"} width={300} height={300} />
+    <ResumeItem key={3} title={"Being an OU Student, OpenUniversity"} text={"I did this course etc.."} file={c3} filetype={"pdf"} width={300} height={300} />
+    <ResumeItem key={2} title={"SEO ECommerce Mastery, Udemy"} text={"I did this course etc.."} file={c2} filetype={"jpg"} width={300} height={300} />
+    <ResumeItem key={1} title={"C# Programming Using, W3Schools"} text={"I did this course etc.."} file={c1} filetype={"pdf"} width={300} height={300} />
   </div>
 </div>
 
