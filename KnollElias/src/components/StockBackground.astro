@@ -1,12 +1,21 @@
 ---
 // import TextLink from '../elements/3textlink.astro'
 import Resume from '../elements/Resume.astro'
+import ResumeItem from '../elements/ResumeItem.astro'
 ---
 
 <div>
   <!-- <TextLink /> -->
   <Resume />
+  <ResumeItem key={1} title={"C# Developmentcourse, W3Schools"} text={"I didi this course etc.."} file={require("../../public/certificates/W3_cdev.pdf")} filetype={"pdf"}/>
+
+
+  
 </div>
+
+<script>
+  let openedResumeKey = 0;
+</script>
 
 <style>
   p {

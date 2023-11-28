@@ -1,0 +1,29 @@
+---
+// THis is a block to laod assetslike .pdf and .png  and or .jpg.
+// The astro props should be the name of the file and the type of file, as well as the caption and the text.
+---
+
+<div class="container">
+  <p>{title}</p>
+  <ul>
+  {points.map(route => (
+    <li id={route + "c"}><p>{route}</p></li>
+  ))}
+  </ul>
+</div>
+
+
+<style>
+  p {
+    margin: 0;
+    color: white;
+  }
+  .container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+</style>
