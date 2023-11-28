@@ -31,22 +31,14 @@ import c4 from '../../public/certificates/OU_SCOD.pdf';
   document.addEventListener('DOMContentLoaded', () => {
     const containers = document.querySelectorAll('.container');
 
-    containers.forEach(container => {
-      container.addEventListener('mouseenter', () => {
-        container.style.backgroundColor = 'red';
-        toggleDisplay(container);
-      });
-      container.addEventListener('mouseleave', () => {
-        container.style.backgroundColor = '';
-        toggleDisplay(container);
-      });
-      // Add touch event listeners for mobile devices
-      container.addEventListener('touchstart', () => {
-        container.style.backgroundColor = 'red';
-        toggleDisplay(container);
-      });
-    });
+    
   });
+
+      // Add touch event listeners for mobile devices
+      // container.addEventListener('touchstart', () => {
+      //   container.style.backgroundColor = 'red';
+      //   toggleDisplay(container);
+      // );
 </script>
 
 

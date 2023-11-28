@@ -1,64 +1,66 @@
 ---
-// Props: key, title, text, file, filetype, width, height
+// Props: key, title, text, file, filetype
 const { key, title, text, file, filetype } = Astro.props;
 ---
 
-<div class="container" id={'resume-item-' + key}
+<div class="resume-item-container" id={'resume-item-' + key}
      onMouseEnter={(event) => handleMouseEnter(event, key)} 
-     onMouseLeave={(event) => handleMouseLeave(event, key)}>
+     onMouseLeave={(event) => handleMouseLeave(event, key)}
+     onTouchStart={(event) => handleTouchStart(event, key)}>
   <p class="title">{title}</p>
   <div class="text-and-file" style="display: none;">
     <p class="text">{text}</p>
     {filetype === 'pdf' && (
-      <object data={file} type="application/pdf" style="width: 80%; height: 50vh;">PDF cannot be displayed</object>
+      <object data={file} type="application/pdf" style="width: 50%; height: 50vh;">PDF cannot be displayed</object>
     )}
     {filetype === 'jpg' && (
-      <img src={file} style="width: 80%; height: 80%;" alt="Certificate image" />
+      <img src={file} style="width: 50%; height: 50vh;" alt="Certificate image" />
     )}
-    {/* Add conditions for other file types as needed */}
   </div>
 </div>
 
 <script>
   let timers = {};
 
-  function handleMouseEnter(event, key) {
-    clearTimeout(timers[key]);
-    const container = event.currentTarget;
-    container.style.backgroundColor = 'red';
-    const textAndFile = container.querySelector('.text-and-file');
+  function showTextAndFile(textAndFile) {
     textAndFile.style.display = 'block';
+    textAndFile.style.maxHeight = '80vh';
+  }
+  
+  function hideTextAndFile(textAndFile) {
+    textAndFile.style.display = 'none';
+    textAndFile.style.maxHeight = '80vh';
+  }
+
+  function handleMouseEnter(event, key) {
+    const textAndFile = event.currentTarget.querySelector('.text-and-file');
+    clearTimeout(timers[key]);
+    showTextAndFile(textAndFile);
   }
 
   function handleMouseLeave(event, key) {
-    const container = event.currentTarget;
-    container.style.backgroundColor = ''; // Reset background color
-    if (timers[key]) {
-      clearTimeout(timers[key]);
-    }
-    timers[key] = setTimeout(() => {
-      const textAndFile = container.querySelector('.text-and-file');
-      textAndFile.style.display = 'none';
-    }, 3000);
+    const textAndFile = event.currentTarget.querySelector('.text-and-file');
+    // If there's an existing timer, we clear it and start a new one
+    clearTimeout(timers[key]);
+    timers[key] = setTimeout(() => hideTextAndFile(textAndFile), 3000);
   }
 
   function handleTouchStart(event, key) {
     event.preventDefault();
-    const currentTimer = timers[key];
-    if (currentTimer) {
-      clearTimeout(currentTimer);
+    const textAndFile = event.currentTarget.querySelector('.text-and-file');
+    // If the item is already displayed, hide it immediately without a delay
+    if (textAndFile.style.display === 'block') {
+      hideTextAndFile(textAndFile);
+      clearTimeout(timers[key]); // Cancel any pending timeouts since we're manually toggling
+    } else {
+      showTextAndFile(textAndFile);
+      // We don't set a timeout here because touch should toggle immediately
     }
-    const container = event.currentTarget;
-    container.style.backgroundColor = 'red';
-    const textAndFile = container.querySelector('.text-and-file');
-    const isCurrentlyDisplayed = textAndFile.style.display === 'block';
-    // Toggle display on touch
-    textAndFile.style.display = isCurrentlyDisplayed ? 'none' : 'block';
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.container').forEach(container => {
-      const key = parseInt(container.getAttribute('id').replace('resume-item-', ''));
+    document.querySelectorAll('.resume-item-container').forEach(container => {
+      const key = container.getAttribute('id').replace('resume-item-', '');
       container.addEventListener('mouseenter', (event) => handleMouseEnter(event, key));
       container.addEventListener('mouseleave', (event) => handleMouseLeave(event, key));
       container.addEventListener('touchstart', (event) => handleTouchStart(event, key));
@@ -67,29 +69,45 @@ const { key, title, text, file, filetype } = Astro.props;
 </script>
 
 
-
-
 <style>
-  .container {
-    margin: 10px;
+  .resume-item-container {
+    width: 100%;
+    margin: 10px 0;
     padding: 10px;
     border: 1px solid #fff;
     color: white;
     cursor: pointer;
-    width: 100%;
-    text-align: center;
-    transition: background-color 0.3s; /* Smooth transition for background color */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    transition: background-color 0.3s;
+    overflow: hidden;
   }
-  .container:hover, .container:active {
-    background-color: red; /* Change color on hover and on active state for mobile */
+  .resume-item-container:hover, .resume-item-container:active {
+    background: linear-gradient(to right, red, purple);
   }
   .title {
     font-weight: bold;
+    text-align: left;
+    margin: 0; /* Ensures no default margin/padding is affecting the alignment */
+    display: block; /* Ensures the title uses the full width of its container */
   }
   .text {
     margin-top: 5px;
+    text-align: center; /* Center the text */
   }
-  .certificate-container {
-    margin-top: 10px;
+  .text-and-file {
+    align-items: center;
+    display: flex; /* Display the text and file side-by-side */
+    width: 100%; /* Full width of the container */
+    margin-top: 10px; /* Space between the title and the file */
+    transition: all 0.3s ease; /* Smooth transition for expanding the container */
+    background: transparent; /* Default background */
+    height: 50vh; /* Maximum height to not overflow the viewport */
+  }
+  .text-and-file object,
+  .text-and-file img {
+    width: 100%; /* Full width of their container */
+    height: 100vh; /* Maximum height to not overflow the viewport */
   }
 </style>
