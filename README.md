@@ -4,14 +4,14 @@ Hello ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-
 Software Development Engineer
 -----------------------------
 
-I've been learning to code since 2021. I started with Game Development in C#, but have really found a passion for fullstack and backend development.
+I've been learning programming languages and software development since 2021. I started with Game Development in C#, but have really found a passion for fullstack and backend development.
 
 * 🌍  I'm based in Switzerland
 * 🖥️  See my portfolio at [My Website](http://knollelias.ch)
 * ✉️  You can contact me at [knoll.elias@icloud.com](mailto:knoll.elias@icloud.com)
 * 🚀  I'm currently working at [Lemonbrain](http://lemonbrain.ch)
-* 🧠  I'm studying BSc Computing and IT (Software)
-* 🤝  I'm open to collaborating on Open Source and Side-projects
+* 🧠  I'm studying BSc in Computing and IT, specializing in Software.
+* 🤝  I'm open to collaborations in Open Source and side projects.
 * ⚡  !Linux != !!Linux
 
 ### Skills
@@ -23,9 +23,8 @@ I've been learning to code since 2021. I started with Game Development in C#, bu
 ### Socials
 
 <p align="left"> </a> <a href="https://www.github.com/KnollElias" target="_blank" rel="noreferrer"> <picture> <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/github-dark.svg" /> <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/github.svg" /> <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/github.svg" width="32" height="32" /> </picture> </a> <a href="https://www.linkedin.com/in/elias-knoll-821b42237" target="_blank" rel="noreferrer"> <picture> <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/linkedin-dark.svg" /> <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/linkedin.svg" /> <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/linkedin.svg" width="32" height="32" /> </picture> </a> <a href="http://www.medium.com/@knoll.elias" target="_blank" rel="noreferrer"> <picture> <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/medium-dark.svg" /> <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/medium.svg" /> <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/socials/medium.svg" width="32" height="32" /> </picture> </a></p>
-### Badges
 
-<b>My GitHub Stats</b>
+### GitHub Stats
 
 <a href="http://www.github.com/KnollElias"><img src="https://github-readme-stats.vercel.app/api?username=KnollElias&show_icons=true&hide=&count_private=true&title_color=0891b2&text_color=ffffff&icon_color=0891b2&bg_color=1c1917&hide_border=true&show_icons=true" alt="KnollElias's GitHub stats" /></a>
 
