@@ -7,7 +7,6 @@ Software Development Engineer
 I've been learning programming languages and software development since 2021. I started with Game Development in C#, but have really found a passion for fullstack and backend development.
 
 * 🌍  I'm based in Switzerland
-* 🖥️  See my portfolio at [My Website](http://knollelias.ch)
 * ✉️  You can contact me at [knoll.elias@icloud.com](mailto:knoll.elias@icloud.com)
 * 🚀  I'm currently working at [Lemonbrain](http://lemonbrain.ch)
 * 🧠  I'm studying BSc in Computing and IT, specializing in Software.
