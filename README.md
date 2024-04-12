@@ -8,7 +8,7 @@ I've been learning programming languages and software development since 2021. I 
 
 * 🌍  I'm based in Switzerland
 * ✉️  You can contact me at [knoll.elias@icloud.com](mailto:knoll.elias@icloud.com)
-* 🚀  I'm writing code every day, working at [Lemonbrain](http://lemonbrain.ch) and [Parashift](https://parashift.io/)
+* 🚀  I'm writing code every day, working at [Lemonbrain](http://lemonbrain.ch) and [Parashift](https://parashift.io/).
 * 🧠  I'm studying BSc in Computing and IT, specializing in Software.
 * 🤝  I'm open to collaborations in Open Source and side projects.
 * ⚡  !Linux != !!Linux
