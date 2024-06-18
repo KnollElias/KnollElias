@@ -29,3 +29,8 @@ I've been learning programming languages and software development since 2021. I 
 
 <a href="http://www.github.com/KnollElias"><img src="https://github-readme-streak-stats.herokuapp.com/?user=KnollElias&stroke=ffffff&background=1c1917&ring=0891b2&fire=0891b2&currStreakNum=ffffff&currStreakLabel=0891b2&sideNums=ffffff&sideLabels=ffffff&dates=ffffff&hide_border=true" /></a>
 
+### Daily Dev Profile
+
+<a href="https://app.daily.dev/knollelias"><img src="https://api.daily.dev/devcards/v2/nT6vXUVMv6hKlZ1FRQ94G.png?type=default&r=4ep" width="356" alt="KnollElias's Dev Card"/></a>
+
+
