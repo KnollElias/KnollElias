@@ -1,6 +1,4 @@
-# Hello ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-9127-417c-8b55-ab5a4333674e.gif)My name is Elias Knoll
-
-## Software Development Engineer
+## Hello ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-9127-417c-8b55-ab5a4333674e.gif)My name is Elias
 
 I've been learning programming languages and software development since 2021. I started with Game Development in C#, but have really found a passion for fullstack and backend development.
 
